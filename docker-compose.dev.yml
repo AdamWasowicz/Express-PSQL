@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:  
+  database:
+    container_name: ${DB_CONTAINER_NAME}
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT_OUT}:${DB_PORT_IN}"
+    networks:
+      - backend-network
+    volumes:
+      - 'db-volume:/var/lib/postgresql/data'
+
+networks:
+  backend-network:
+
+volumes:
+  db-volume:
