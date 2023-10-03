@@ -4,5 +4,6 @@ Change values in <b>.env</b> file.
 
 ### 2. Run with Docker:
 ``` sh
-docker compose up
+npm run start-docker-dev
+npm run dev
 ```
