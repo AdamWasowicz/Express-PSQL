@@ -3,7 +3,7 @@ import dotenvExpand from 'dotenv-expand';
 import express, { Express } from 'express';
 import bodyParser from 'body-parser';
 import useDevCORS from "./middleware/use-dev-cors";
-import useAuth from "./middleware/use-jwt-auth";
+import { checkAuth} from "./middleware/use-jwt-auth";
 import productRouter from './routes/product';
 import purchaseRouter from './routes/purchase';
 import authRouter from './routes/auth';
@@ -21,7 +21,7 @@ const app: Express = express();
 // Services
 app.use(bodyParser.json());
 app.use(useDevCORS);
-app.use(useAuth);
+app.use(checkAuth);
 
 // REST
 app.use('/product', productRouter);

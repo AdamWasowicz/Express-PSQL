@@ -1,7 +1,12 @@
-import { DataTypes as dt } from 'sequelize';
-import sc from '../sequelize/client';
+import { Model, DataTypes as dt } from 'sequelize';
+import SequelizeClient from '../sequelize/client';
 
-const Purchase = sc.define('Purchase', {
+class Purchase extends Model {
+    Id: number | undefined;
+    Date: Date | undefined;
+}
+
+Purchase.init({
     Id: {
         type: dt.INTEGER,
         autoIncrement: true,
@@ -12,6 +17,6 @@ const Purchase = sc.define('Purchase', {
         type: dt.DATE,
         allowNull: false
     }
-}, { freezeTableName: true })
+}, {sequelize: SequelizeClient, freezeTableName: true })
 
 export default Purchase;

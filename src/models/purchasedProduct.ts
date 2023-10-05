@@ -1,23 +1,28 @@
-import { DataTypes as dt } from 'sequelize';
-import sc from '../sequelize/client';
-import Purchase from './purchase';
+import { Model, DataTypes as dt } from 'sequelize';
+import SequelizeClient from '../sequelize/client';
 
-const PurchasedProduct = sc.define('PurchasedProduct', {
-    id: {
+class PurchasedProduct extends Model {
+    Id: number | undefined;
+    NumberOfItems: number | undefined;
+    ProductPrice: number | undefined;
+}
+
+PurchasedProduct.init({
+    Id: {
         type: dt.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
 
-    numberOfItems: {
+    NumberOfItems: {
         type: dt.INTEGER,
         allowNull: false
     },
 
-    priceOfOneItem: {
+    ProductPrice: {
         type: dt.DOUBLE,
         allowNull: false
     }
-}, { freezeTableName: true })
+}, {sequelize: SequelizeClient, freezeTableName: true })
 
 export default PurchasedProduct;

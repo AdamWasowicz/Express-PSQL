@@ -11,7 +11,7 @@ const SequelizeClient = new Sequelize(
     process.env.DB_USER!,
     process.env.DB_PASSWORD!,
     {
-        host: `0.0.0.0`,
+        host: process.env.APP_HOST,
         dialect: 'postgres',
         port: +dbPort,
         define: {

@@ -8,16 +8,6 @@ class User extends Model {
     Email: string | undefined;
     HashedPassword: string | undefined;
     WhenCreated: string | undefined
-
-    // constructor(Id: number, FirstName: string, Surname: string, Email: string, HashedPassword: string, WhenCreated: string) {
-    //     super()
-    //     this.Id = 1;
-    //     this.FirstName = FirstName;
-    //     this.Surname = Surname;
-    //     this.Email = Email;
-    //     this.HashedPassword = HashedPassword;
-    //     this.WhenCreated = WhenCreated;
-    // }
 }
 
 User.init({

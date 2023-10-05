@@ -1,12 +1,21 @@
 import Product from "../models/product";
+import User from "../models/user";
 import Purchase from "../models/purchase";
 import PurchasedProduct from "../models/purchasedProduct";
 import SequelizeClient from "./client";
 
 const createRealtions = () => {
+    // User -> Purchase
+    User.hasMany(Purchase);
+    Purchase.belongsTo(User);
+
     // Purchase -> PurchasedProduct
     Purchase.hasMany(PurchasedProduct);
     PurchasedProduct.belongsTo(Purchase);
+
+    // PurchasedProduct -> Product
+    PurchasedProduct.hasOne(Product);
+    Product.belongsTo(PurchasedProduct);
 }
 
 

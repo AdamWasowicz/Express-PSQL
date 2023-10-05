@@ -1,7 +1,14 @@
-import { DataTypes as dt } from 'sequelize';
-import sc from '../sequelize/client';
+import { Model, DataTypes as dt } from 'sequelize';
+import SequelizeClient from '../sequelize/client';
 
-const Product = sc.define('Product', {
+class Product extends Model {
+    Id: number | undefined;
+    Name: string | undefined;
+    Category: string | undefined;
+    Price: number | undefined;
+}
+
+Product.init({
     Id: {
         type: dt.INTEGER,
         autoIncrement: true,
@@ -15,14 +22,14 @@ const Product = sc.define('Product', {
 
     Category: {
         type: dt.STRING,
-        allowNull: false,
+        allowNull: true,
     },
 
     Price: {
         type: dt.DOUBLE,
         allowNull: false
     }
-}, { freezeTableName: true });
+}, {sequelize: SequelizeClient, freezeTableName: true });
 
 
 

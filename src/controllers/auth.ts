@@ -2,14 +2,15 @@ import { RequestHandler } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
+import { JwtModel } from '../utils/jwt';
 
 
-const generateJwt = (input: User) => {
-    const token = jwt.sign({
-        Id: input.Id,
-        Email: input.Email
-    }, process.env.APP_KEY!, {expiresIn: '3h'});
+const generateJwt = (input: User): string => {
+    const jwtObject: JwtModel = {
+        userId: input.Id!,        
+    }
 
+    const token = jwt.sign(jwtObject, process.env.APP_KEY!, {expiresIn: '12h'});
     return token;
 }
 
