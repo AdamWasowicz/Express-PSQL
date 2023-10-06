@@ -31,10 +31,10 @@ app.use('/auth', authRouter);
 // Middleware
 app.use(useErrorHandler);
 
+// Start app
 const dbPort = process.env.DB_PORT_OUT!;
 const sequelize = sequelizeConfig;
 
-// Start app
 sequelize.authenticate()
     .then((result) => {
         initDatabase();

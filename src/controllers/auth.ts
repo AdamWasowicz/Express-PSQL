@@ -25,7 +25,7 @@ export const register: RequestHandler = async (req, res, next) => {
     // Validate input
     if (false) {
         const error = new Error('[ERROR] Input is invalid');
-        throw error;
+        next(error);
     }
 
     const rInfo = {
@@ -42,10 +42,7 @@ export const register: RequestHandler = async (req, res, next) => {
 
     const user = await User.create(userModel);
     
-    res.status(201).json({
-        token: generateJwt(user)
-    })
-    res.send();
+    res.status(201).json({ token: generateJwt(user) }).send();
 }
 
 export const login: RequestHandler = async (req, res, next) => {
@@ -54,7 +51,7 @@ export const login: RequestHandler = async (req, res, next) => {
     // Validate input
     if (false) {
         const error = new Error('[ERROR] Input is invalid');
-        throw error;
+        next(error);
     }
 
     const user = await User.findOne({
@@ -64,17 +61,12 @@ export const login: RequestHandler = async (req, res, next) => {
     })
 
     if (user === null) {
-        const error = new Error(`[ERROR] There is no User with email: ${body.Email}`)
-        throw error;
+        res.status(404).json({message: 'There is no user with that combination of email and password'}).send();
     }
 
-    if (await validatePassword(user, body.Password) === false) {
-        const error = new Error(`[ERROR] Password is invalid`)
-        throw error;
+    if (await validatePassword(user!, body.Password) === false) {
+        res.status(404).json({message: 'There is no user with that combination of email and password'}).send();
     }
 
-    res.send(200).json({
-        token: generateJwt(user)
-    })
-    res.send();
+    res.send(200).json({ token: generateJwt(user!) }).send()
 }

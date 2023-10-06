@@ -11,11 +11,14 @@ export const checkAuth: RequestHandler = (req, res, next) => {
   const token = authHeader.split(' ')[1];
   let decodedToken;
 
-  try { decodedToken = jwt.verify(token, process.env.APP_KEY!); } 
+  try { 
+    decodedToken = jwt.verify(token, process.env.APP_KEY!); 
+  } 
   catch (err) {
     req.isAuth = false;
     return next();
   }
+
   if (!decodedToken) {
     req.isAuth = false;
     return next();
@@ -26,11 +29,12 @@ export const checkAuth: RequestHandler = (req, res, next) => {
     token: token
   }
   req.isAuth = true;
-  next();
+  return next();
 };
 
 export const requireAuth: RequestHandler = (req, res, next) => {
-  if (req.isAuth === null || req.isAuth === undefined) {
-    throw new Error('[Error] Authentication required');
+  if (req.isAuth == false) {
+    return res.status(401).send();
   }
+  return next();
 }
