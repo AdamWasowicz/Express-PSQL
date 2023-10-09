@@ -2,6 +2,8 @@ import { RequestHandler } from 'express';
 import Purchase from '../models/purchase';
 import PurchasedProduct from '../models/purchasedProduct';
 import SequelizeClient from '../sequelize/client';
+import { createPurchaseDto } from '../models/dto/purchase';
+import { addPurchasedProductDto } from '../models/dto/purchasedProducts';
 
 export const getPurchases: RequestHandler = async (req, res, next) => {
     const purchases = (await Purchase.findAll({
@@ -34,14 +36,12 @@ export const getPurchase: RequestHandler = async (req, res, next) => {
 }
 
 export const postPurchase: RequestHandler = async (req, res, next) => {
-    if (req.body.purchase === null) {
-        res.status(400).json({message: '[ERROR] Request body is missing field: purchase'}).send();
-    }
-    else {
-        // Validate input here
+    // Validate input
+    if (false) {
+        res.status(400).json({message: 'Request body is missing field: purchasedProducts'}).send();
     }
 
-    const purchaseData: {numberOfItems: number, priceOfOneItem: number}[] = req.body.purchase;
+    const requestBody: createPurchaseDto = req.body;
     let purchaseId: string | undefined = undefined;
     const transaction = await SequelizeClient.transaction();
     
@@ -54,10 +54,11 @@ export const postPurchase: RequestHandler = async (req, res, next) => {
         purchaseId = purchase.dataValues.Id;
 
         // PurchasedProducts
-        const promiseArray = purchaseData.map((item) => {
+        const promiseArray = requestBody.purchasedProducts.map((item) => {
             return PurchasedProduct.create({
+                ProductId: item.productId,
                 NumberOfItems: item.numberOfItems, 
-                ProductPrice: item.priceOfOneItem,
+                ProductPrice: item.productPrice,
                 PurchaseId: purchaseId,
             })
         })
@@ -97,6 +98,11 @@ export const deletePurchase: RequestHandler = async (req, res, next) => {
             include: PurchasedProduct
         });
 
+        if (purchase?.UserId !== req.token?.userId) {
+            transaction.commit();
+            res.status(403).json({message: "This user can't edit this resource"}).send();
+        }
+
         if (purchase === null) {
             res.status(404).json({message: `Purchase with Id: ${Id} not found`})
                 .send();
@@ -114,4 +120,48 @@ export const deletePurchase: RequestHandler = async (req, res, next) => {
     }
 
     res.status(204).send();
+}
+
+export const patchPurchase: RequestHandler = async (req, res, next) => {
+    // Validate input
+    if (false) {
+        return res.status(400).json({message: "Invalid body content"}).send();
+    }
+
+    const requestBody: addPurchasedProductDto = req.body;
+    const transaction = await SequelizeClient.transaction();
+
+    try {
+        const purchase = await Purchase.findOne({
+            where: {
+                Id: requestBody.purchaseId
+            }
+        })
+
+        const promiseArray = requestBody.purchasedProducts.map((item) => {
+            return PurchasedProduct.create({
+                ProductId: item.productId,
+                NumberOfItems: item.numberOfItems, 
+                ProductPrice: item.productPrice,
+                PurchaseId: purchase?.Id,
+            })
+        })
+
+        await Promise.all(promiseArray);
+        await transaction.commit();
+
+        const output = await Purchase.findOne({
+            where: { Id: purchase?.Id },
+            include: PurchasedProduct
+        })
+
+        return res.status(200).json(output).send();
+        
+    }
+    catch (error) {
+        console.log('[ERROR] Error occured while creating new rows');
+        console.log(error)
+        await transaction.rollback();
+        return res.status(500).send();
+    }
 }

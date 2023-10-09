@@ -8,5 +8,6 @@ purchaseRouter.post('', requireAuth, c.postPurchase);
 purchaseRouter.get('/:Id', c.getPurchase);
 purchaseRouter.get('/test', c.getPurchases);
 purchaseRouter.delete('/:Id', requireAuth, c.deletePurchase);
+purchaseRouter.patch('', requireAuth, c.patchPurchase)
 
 export default purchaseRouter;

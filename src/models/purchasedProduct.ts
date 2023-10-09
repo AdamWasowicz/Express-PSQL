@@ -5,6 +5,10 @@ class PurchasedProduct extends Model {
     Id: number | undefined;
     NumberOfItems: number | undefined;
     ProductPrice: number | undefined;
+
+    // FK
+    ProductId: number | undefined;
+    PurchaseId: number | undefined;
 }
 
 PurchasedProduct.init({

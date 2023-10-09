@@ -7,15 +7,21 @@ import SequelizeClient from "./client";
 const createRealtions = () => {
     // User -> Purchase
     User.hasMany(Purchase);
-    Purchase.belongsTo(User);
+    Purchase.belongsTo(User, {
+        foreignKey: 'UserId'
+    });
 
     // Purchase -> PurchasedProduct
     Purchase.hasMany(PurchasedProduct);
-    PurchasedProduct.belongsTo(Purchase);
+    PurchasedProduct.belongsTo(Purchase, {
+        foreignKey: "PurchaseId"
+    });
 
     // PurchasedProduct -> Product
     PurchasedProduct.hasOne(Product);
-    Product.belongsTo(PurchasedProduct);
+    Product.belongsTo(PurchasedProduct, {
+        foreignKey: 'ProductId'
+    });
 }
 
 
@@ -30,6 +36,7 @@ const initDatabase = async () => {
         console.log('[ERROR] Error occured while initing database')
         console.log(error)
         t.rollback();
+        throw error;
     }
     t.commit();
 }

@@ -42,7 +42,7 @@ export const register: RequestHandler = async (req, res, next) => {
 
     const user = await User.create(userModel);
     
-    res.status(201).json({ token: generateJwt(user) }).send();
+    return res.status(201).json({ token: generateJwt(user) }).send();
 }
 
 export const login: RequestHandler = async (req, res, next) => {
@@ -61,12 +61,12 @@ export const login: RequestHandler = async (req, res, next) => {
     })
 
     if (user === null) {
-        res.status(404).json({message: 'There is no user with that combination of email and password'}).send();
+        return res.status(404).json({message: 'There is no user with that combination of email and password'}).send();
     }
 
     if (await validatePassword(user!, body.Password) === false) {
-        res.status(404).json({message: 'There is no user with that combination of email and password'}).send();
+        return res.status(404).json({message: 'There is no user with that combination of email and password'}).send();
     }
 
-    res.send(200).json({ token: generateJwt(user!) }).send()
+    return res.send(200).json({ token: generateJwt(user!) }).send()
 }

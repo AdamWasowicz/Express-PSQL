@@ -4,6 +4,9 @@ import SequelizeClient from '../sequelize/client';
 class Purchase extends Model {
     Id: number | undefined;
     Date: Date | undefined;
+
+    // FK
+    UserId: number | undefined;
 }
 
 Purchase.init({
