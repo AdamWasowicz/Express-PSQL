@@ -3,6 +3,7 @@ import User from "../models/user";
 import Purchase from "../models/purchase";
 import PurchasedProduct from "../models/purchasedProduct";
 import SequelizeClient from "./client";
+import Comment from "../models/comment";
 
 const createRealtions = () => {
     // User -> Purchase
@@ -22,6 +23,18 @@ const createRealtions = () => {
     Product.belongsTo(PurchasedProduct, {
         foreignKey: 'ProductId'
     });
+
+    // Product -> Comment
+    Product.hasMany(Comment);
+    Comment.belongsTo(Product, {
+        foreignKey: 'ProductId'
+    })
+
+    // User -> Comment
+    User.hasMany(Comment);
+    Comment.belongsTo(User, {
+        foreignKey: 'UserId'
+    })
 }
 
 
@@ -38,6 +51,7 @@ const initDatabase = async () => {
         t.rollback();
         throw error;
     }
+    
     t.commit();
 }
 

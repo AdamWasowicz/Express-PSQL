@@ -2,8 +2,8 @@ import { RequestHandler } from 'express';
 import Purchase from '../models/purchase';
 import PurchasedProduct from '../models/purchasedProduct';
 import SequelizeClient from '../sequelize/client';
-import { createPurchaseDto } from '../models/dto/purchase';
-import { addPurchasedProductDto } from '../models/dto/purchasedProducts';
+import { createPurchaseDto } from '../models/dto/purchase-dto';
+import { addPurchasedProductDto } from '../models/dto/purchasedProducts-dto';
 
 export const getPurchases: RequestHandler = async (req, res, next) => {
     const purchases = (await Purchase.findAll({

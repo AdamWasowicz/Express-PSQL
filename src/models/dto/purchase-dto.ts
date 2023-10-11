@@ -1,4 +1,4 @@
-import { createPurchasedProductDto } from "./purchasedProducts"
+import { createPurchasedProductDto } from "./purchasedProducts-dto"
 
 export type createPurchaseDto = {
     purchasedProducts: createPurchasedProductDto[]

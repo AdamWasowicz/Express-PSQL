@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import Product from '../models/product';
-import { createProductDto, updateProductDto } from '../models/dto/product';
+import { createProductDto, updateProductDto } from '../models/dto/product-dto';
 
 export const getProducts: RequestHandler = async (req, res, next) => {
     const products = await Product.findAll();
