@@ -1,10 +1,38 @@
-export type createPurchasedProductDto = {
+/**
+ *  @openapi
+ *  components:
+ *      schemas:
+ *          CreatePurchasedProductDto:
+ *              type: object
+ *              properties:
+ *                  productId:
+ *                      type: number
+ *                  numberOfItems:
+ *                      type: number
+ *                  productPrice:
+ *                      type: number
+ */
+export type CreatePurchasedProductDto = {
     productId: number,
     numberOfItems: number,
     productPrice: number
 }
 
-export type addPurchasedProductDto = {
+/**
+ *  @openapi
+ *  components:
+ *      schemas:
+ *          AddPurchasedProductDto:
+ *              type: object
+ *              properties:
+ *                  purchaseId:
+ *                      type: number
+ *                  purchasedProducts:
+ *                      type: array
+ *                      items:
+ *                          $ref: '#/components/schemas/CreatePurchasedProductDto'
+ */
+export type AddPurchasedProductDto = {
     purchaseId: number,
-    purchasedProducts: createPurchasedProductDto[]
+    purchasedProducts: CreatePurchasedProductDto[]
 }

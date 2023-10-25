@@ -1,6 +1,23 @@
 import { Model, DataTypes as dt } from 'sequelize';
 import SequelizeClient from '../sequelize/client';
 
+/**
+ *  @openapi
+ *  components:
+ *      schemas:
+ *          Product:
+ *              type: object
+ *              properties:
+ *                  Id:
+ *                      type: number
+ *                  Name: string
+ *                      type: string
+ *                  Category:
+ *                      type: string
+ *                      required: false
+ *                  Price:
+ *                      type: number
+ */
 class Product extends Model {
     Id: number | undefined;
     Name: string | undefined;

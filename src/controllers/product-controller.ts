@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import Product from '../models/product';
-import { createProductDto, updateProductDto } from '../models/dto/product-dto';
+import { CreateProductDto, UpdateProductDto } from '../models/dto/product-dto';
 
 export const getProducts: RequestHandler = async (req, res, next) => {
     const products = await Product.findAll();
@@ -30,7 +30,7 @@ export const getProduct: RequestHandler = async (req, res, next) => {
 }
 
 export const postProduct: RequestHandler = async (req, res, next) => {
-    const bodyContent: createProductDto = req.body;
+    const bodyContent: CreateProductDto = req.body;
     
     // Validate
     if (false) {
@@ -61,7 +61,7 @@ export const deleteProduct: RequestHandler = async (req, res, next) => {
 }
 
 export const patchProduct: RequestHandler = async (req, res, next) => {
-    const bodyContent: updateProductDto = req.body;
+    const bodyContent: UpdateProductDto = req.body;
 
     // Validate
     if (false) {

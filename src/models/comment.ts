@@ -1,6 +1,25 @@
 import { Model, DataTypes as dt } from 'sequelize';
 import SequelizeClient from '../sequelize/client';
 
+/**
+ *  @openapi
+ *  components:
+ *      schemas:
+ *          Comment:
+ *              type: object
+ *              properties:
+ *                  Id:
+ *                      type: number
+ *                  Content:
+ *                      type: string
+ *                  Date:
+ *                      type: string
+ *                      format: date-time
+ *                  UserId:
+ *                      type: number
+ *                  ProductId:
+ *                      type: number
+ */
 class Comment extends Model {
     Id: number | undefined;
     Content: string | undefined;

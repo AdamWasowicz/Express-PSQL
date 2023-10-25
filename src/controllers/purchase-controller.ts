@@ -2,8 +2,8 @@ import { RequestHandler } from 'express';
 import Purchase from '../models/purchase';
 import PurchasedProduct from '../models/purchasedProduct';
 import SequelizeClient from '../sequelize/client';
-import { createPurchaseDto } from '../models/dto/purchase-dto';
-import { addPurchasedProductDto } from '../models/dto/purchasedProducts-dto';
+import { CreatePurchaseDto } from '../models/dto/purchase-dto';
+import { AddPurchasedProductDto } from '../models/dto/purchasedProducts-dto';
 
 export const getPurchases: RequestHandler = async (req, res, next) => {
     const purchases = (await Purchase.findAll({
@@ -41,7 +41,7 @@ export const postPurchase: RequestHandler = async (req, res, next) => {
         res.status(400).json({message: 'Request body is missing field: purchasedProducts'}).send();
     }
 
-    const requestBody: createPurchaseDto = req.body;
+    const requestBody: CreatePurchaseDto = req.body;
     let purchaseId: string | undefined = undefined;
     const transaction = await SequelizeClient.transaction();
     
@@ -128,7 +128,7 @@ export const patchPurchase: RequestHandler = async (req, res, next) => {
         return res.status(400).json({message: "Invalid body content"}).send();
     }
 
-    const requestBody: addPurchasedProductDto = req.body;
+    const requestBody: AddPurchasedProductDto = req.body;
     const transaction = await SequelizeClient.transaction();
 
     try {

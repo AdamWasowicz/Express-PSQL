@@ -1,6 +1,21 @@
 import { Model, DataTypes as dt } from 'sequelize';
 import SequelizeClient from '../sequelize/client';
 
+/**
+ *  @openapi
+ *  components:
+ *      schemas:
+ *          Purchase:
+ *              type: object
+ *              properties:
+ *                  Id:
+ *                      type: number
+ *                  Date:
+ *                      type: string
+ *                      format: date-time
+ *                  UserId:
+ *                      type: number
+ */
 class Purchase extends Model {
     Id: number | undefined;
     Date: Date | undefined;

@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express';
 import Comment from '../models/comment';
-import { createCommentDto } from '../models/dto/comment-dto';
+import { CreateCommentDto } from '../models/dto/comment-dto';
 
 export const postComment: RequestHandler = async (req, res, next) => {
-    const body = req.body as createCommentDto;
+    const body = req.body as CreateCommentDto;
 
     // Valdiate body
     if (false) {

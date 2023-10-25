@@ -32,6 +32,10 @@ export const checkAuth: RequestHandler = (req, res, next) => {
   return next();
 };
 
+/**
+ * Requires authentication in order to procced to the next step
+ * @returns next() if auth is present, 401 if not
+ */
 export const requireAuth: RequestHandler = (req, res, next) => {
   if (req.isAuth == false) {
     return res.status(401).send();

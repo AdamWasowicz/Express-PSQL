@@ -7,3 +7,6 @@ Change values in <b>.env</b> file.
 npm run start-docker-dev
 npm run dev
 ```
+
+## Documentation
+For documentation visit './docs'
